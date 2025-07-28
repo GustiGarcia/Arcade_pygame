@@ -95,8 +95,8 @@ while not game_over:
     if pelota_x > 800:
         pelota_x = 400
         pelota_y = 300
-        pelota_speed_x *= -1
-        pelota_speed_y = random.randrange(-4,4)
+        pelota_speed_x = random.choice([-5,-4])
+        pelota_speed_y = random.choice([-4,-3,-2,2,3,4])
         puntos_jugador1 += 1
         point.play()
 
@@ -104,8 +104,8 @@ while not game_over:
     if pelota_x < 0:
         pelota_x = 400
         pelota_y = 300
-        pelota_speed_x *= -1
-        pelota_speed_y = random.randrange(-4,4)
+        pelota_speed_x = random.choice([-5,-4])
+        pelota_speed_y = random.choice([-4,-3,-2,2,3,4])
         puntos_jugador2 += 1
         point.play()
     
