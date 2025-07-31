@@ -37,4 +37,51 @@ class Enemigo(pygame.sprite.Sprite):
         self.rect.x += dx
         self.rect.y += dy
 
-        
+class Explosion(pygame.sprite.Sprite):
+    def __init__(self, x, y, imagenes, velocidad_ms=100):
+        super().__init__()
+        self.imagenes = imagenes
+        self.indice = 0
+        self.image = self.imagenes[self.indice]
+        self.rect = self.image.get_rect(center=(x, y))
+        self.tiempo_actual = pygame.time.get_ticks()
+        self.velocidad_ms = velocidad_ms  # Tiempo entre cuadros en milisegundos
+
+    def update(self):
+        ahora = pygame.time.get_ticks()
+        if ahora - self.tiempo_actual > self.velocidad_ms:
+            self.tiempo_actual = ahora
+            self.indice += 1
+            if self.indice < len(self.imagenes):
+                self.image = self.imagenes[self.indice]
+            else:
+                self.kill()
+
+
+
+
+class Nave(pygame.sprite.Sprite):
+    def __init__(self, cenital, izquierda, derecha):
+        super().__init__()
+        self.imagen_cenital = cenital
+        self.imagen_izquierda = izquierda
+        self.imagen_derecha = derecha
+
+        self.image = self.imagen_cenital
+        self.rect = self.image.get_rect()
+        self.rect.center = (400, 560)
+        self.velocidad = 4
+
+    def update(self, teclas):
+        if teclas[pygame.K_a]:
+            self.rect.x -= self.velocidad
+            self.image = self.imagen_izquierda
+        elif teclas[pygame.K_d]:
+            self.rect.x += self.velocidad
+            self.image = self.imagen_derecha
+        else:
+            self.image = self.imagen_cenital
+        if self.rect.left < 0:
+            self.rect.left = 0
+        if self.rect.right > 800:
+            self.rect.right = 800
