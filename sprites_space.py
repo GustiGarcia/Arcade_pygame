@@ -26,18 +26,14 @@ class Disparo(pygame.sprite.Sprite):
         if self.rect.bottom < 0:
             self.kill()
 
-
-
 class Enemigo(pygame.sprite.Sprite):
-    def __init__(self, x, y, imagenes):
+    def __init__(self, x, y, imagen):
         super().__init__()
-        self.image = imagenes
+        self.image = imagen
         self.rect = self.image.get_rect(topleft=(x, y))
 
-    def update(self, dx, dy):
-        # Moverse en x (izquierda/derecha) y y (bajar)
-        self.rect.x += dx
-        self.rect.y += dy
+    def update(self):
+        pass  # Ya no hace movimiento acá
 
 class Explosion(pygame.sprite.Sprite):
     def __init__(self, x, y, imagenes, velocidad_ms=200):
