@@ -1,4 +1,6 @@
-import pygame  # Importa la librería pygame
+import pygame, random  # Importa la librería pygame
+
+
 
 # Clase Disparo que hereda de Sprite (permite usar grupos, colisiones, etc.)
 class Disparo(pygame.sprite.Sprite):
@@ -27,9 +29,9 @@ class Disparo(pygame.sprite.Sprite):
 
 
 class Enemigo(pygame.sprite.Sprite):
-    def __init__(self, x, y):
+    def __init__(self, x, y, imagenes):
         super().__init__()
-        self.image = pygame.image.load("./recursos/green.png").convert_alpha()
+        self.image = imagenes
         self.rect = self.image.get_rect(topleft=(x, y))
 
     def update(self, dx, dy):
@@ -38,7 +40,7 @@ class Enemigo(pygame.sprite.Sprite):
         self.rect.y += dy
 
 class Explosion(pygame.sprite.Sprite):
-    def __init__(self, x, y, imagenes, velocidad_ms=100):
+    def __init__(self, x, y, imagenes, velocidad_ms=200):
         super().__init__()
         self.imagenes = imagenes
         self.indice = 0
