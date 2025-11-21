@@ -3,26 +3,28 @@ import pygame, sys, random
 pygame.init()
 pygame.mixer.init()
 
-
 screen_size = (800, 600)
 screen = pygame.display.set_mode(screen_size)
 clock = pygame.time.Clock()
 
-fondo=pygame.image.load('./fondos/fondo_pong.jpg').convert()
+# ---- RUTAS ACTUALIZADAS PARA WEB ----
+fondo = pygame.image.load('assets//fondo_pong.jpg').convert()
 fondo = pygame.transform.scale(fondo, screen_size)
 
-golpe_p1=pygame.mixer.Sound('./sonidos/pongP1.wav')
-golpe_p2=pygame.mixer.Sound("./sonidos/pongP2.wav")
-game_over_sound= pygame.mixer.Sound("./sonidos/game_over_pong.mp3")
-point=pygame.mixer.Sound('./sonidos/point.mp3')
-pausa_sound=pygame.mixer.Sound('./sonidos/pausa.mp3')
+golpe_p1 = pygame.mixer.Sound('assets//pongP1.wav')
+golpe_p2 = pygame.mixer.Sound("assets//pongP2.wav")
+game_over_sound = pygame.mixer.Sound("assets//game_over_pong.mp3")
+point = pygame.mixer.Sound('assets//point.mp3')
+pausa_sound = pygame.mixer.Sound('assets//pausa.mp3')
 pausa_sound.set_volume(0.2)
 
-pygame.mixer.music.load("./sonidos/music_pong.mp3")
+pygame.mixer.music.load("assets//music_pong.mp3")
 pygame.mixer.music.set_volume(0.5)
-pygame.mixer.music.play(-1) #para que se repita en loop
+pygame.mixer.music.play(-1)
 
-pausa=False
+# -------------------------------------
+
+pausa = False
 
 player_width = 15
 player_height = 90
@@ -33,7 +35,7 @@ player_1_coor_y = 255
 player1_speed = 0
 
 # coordenadas player2
-player_2_coor_x = 765 
+player_2_coor_x = 765
 player_2_coor_y = 255
 player2_speed = 0
 
@@ -55,8 +57,7 @@ while not game_over:
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
-       
-    
+
         if event.type == pygame.KEYDOWN:
             # jugador 1
             if event.key == pygame.K_w:
@@ -68,25 +69,24 @@ while not game_over:
                 player2_speed = -3
             if event.key == pygame.K_DOWN:
                 player2_speed = 3
-            if event.key ==pygame.K_p:
-                pausa= not pausa
-        
+            if event.key == pygame.K_p:
+                pausa = not pausa
 
         if event.type == pygame.KEYUP:
-            # jugador 1
-            if event.key == pygame.K_w or event.key == pygame.K_s:
+            if event.key in (pygame.K_w, pygame.K_s):
                 player1_speed = 0
-            # jugador 2
-            if event.key == pygame.K_UP or event.key == pygame.K_DOWN:
+            if event.key in (pygame.K_UP, pygame.K_DOWN):
                 player2_speed = 0
+
     if pausa:
-            pausa_texto = pygame.font.SysFont(None, 40).render("PAUSA", True,(255,255,255))
-            pausa_rect=pausa_texto.get_rect(center=(400,300))
-            pausa_sound.play()
-            screen.blit(pausa_texto,pausa_rect)
-            pygame.display.flip()
-            clock.tick(60)
-            continue
+        pausa_texto = pygame.font.SysFont(None, 40).render("PAUSA", True, (255, 255, 255))
+        pausa_rect = pausa_texto.get_rect(center=(400, 300))
+        pausa_sound.play()
+        screen.blit(pausa_texto, pausa_rect)
+        pygame.display.flip()
+        clock.tick(60)
+        continue
+
     # rebote eje Y
     if pelota_y > 590 or pelota_y < 10:
         pelota_speed_y *= -1
@@ -95,8 +95,8 @@ while not game_over:
     if pelota_x > 800:
         pelota_x = 400
         pelota_y = 300
-        pelota_speed_x = random.choice([-5,-4])
-        pelota_speed_y = random.choice([-4,-3,-2,2,3,4])
+        pelota_speed_x = random.choice([-5, -4])
+        pelota_speed_y = random.choice([-4, -3, -2, 2, 3, 4])
         puntos_jugador1 += 1
         point.play()
 
@@ -104,17 +104,19 @@ while not game_over:
     if pelota_x < 0:
         pelota_x = 400
         pelota_y = 300
-        pelota_speed_x = random.choice([-5,-4])
-        pelota_speed_y = random.choice([-4,-3,-2,2,3,4])
+        pelota_speed_x = random.choice([-5, -4])
+        pelota_speed_y = random.choice([-4, -3, -2, 2, 3, 4])
         puntos_jugador2 += 1
         point.play()
-    
+
     # fondo
-    screen.blit(fondo,[0,0])
+    screen.blit(fondo, (0, 0))
 
     # dibujar jugadores y pelota
-    player1 = pygame.draw.rect(screen, [255, 255, 255], (player_1_coor_x, player_1_coor_y, player_width, player_height))
-    player2 = pygame.draw.rect(screen, [255, 255, 255], (player_2_coor_x, player_2_coor_y, player_width, player_height))
+    player1 = pygame.draw.rect(screen, [255, 255, 255],
+                               (player_1_coor_x, player_1_coor_y, player_width, player_height))
+    player2 = pygame.draw.rect(screen, [255, 255, 255],
+                               (player_2_coor_x, player_2_coor_y, player_width, player_height))
     pelota = pygame.draw.circle(screen, [255, 255, 255], (pelota_x, pelota_y), 10)
 
     # movimiento
@@ -123,7 +125,7 @@ while not game_over:
     pelota_x += pelota_speed_x
     pelota_y += pelota_speed_y
 
-    # colisiones con paletas
+    # colisiones
     if pelota.colliderect(player1) and pelota_speed_x < 0:
         pelota_speed_x *= -1
         golpe_p1.play()
@@ -131,22 +133,17 @@ while not game_over:
         pelota_speed_x *= -1
         golpe_p2.play()
 
-    # límites de jugadores
+    # límites
     player_1_coor_y = max(0, min(player_1_coor_y, 510))
     player_2_coor_y = max(0, min(player_2_coor_y, 510))
 
-    # puntaje y nombres
+    # puntaje
     fuente_puntaje = pygame.font.SysFont(None, 100)
     fuente_jugador = pygame.font.SysFont(None, 40)
-    texto1 = fuente_puntaje.render(str(puntos_jugador1), True, (255, 255, 255))
-    texto2 = fuente_puntaje.render(str(puntos_jugador2), True, (255, 255, 255))
-    nombre1 = fuente_jugador.render("Jugador 1", True, (255, 255, 255))
-    nombre2 = fuente_jugador.render("Jugador 2", True, (255, 255, 255))
-
-    screen.blit(texto1, (300, 10))
-    screen.blit(texto2, (480, 10))
-    screen.blit(nombre1, (250, 80))
-    screen.blit(nombre2, (430, 80))
+    screen.blit(fuente_puntaje.render(str(puntos_jugador1), True, (255, 255, 255)), (300, 10))
+    screen.blit(fuente_puntaje.render(str(puntos_jugador2), True, (255, 255, 255)), (480, 10))
+    screen.blit(fuente_jugador.render("Jugador 1", True, (255, 255, 255)), (250, 80))
+    screen.blit(fuente_jugador.render("Jugador 2", True, (255, 255, 255)), (430, 80))
 
     if puntos_jugador1 >= 7 or puntos_jugador2 >= 7:
         game_over = True
@@ -176,7 +173,6 @@ while True:
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_RETURN:
-                pygame.quit()
-                sys.exit()
+        if event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
+            pygame.quit()
+            sys.exit()
