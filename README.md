@@ -40,7 +40,7 @@ Entrar al proyecto:
 cd TU_REPO
 
 Ejecutar:
-python pong.py
+python src/pong.py
 
 🚀 Space (Pygame) — Reversión de Space Invaders
 
@@ -79,7 +79,7 @@ Entrar al proyecto:
 cd TU_REPO
 
 Ejecutar:
-python space.py
+python src/space.py
 
 🛠 Requisitos generales
 

@@ -2,4 +2,11 @@ vengpy/
 lluvia.py
 mouse.py
 main.py
-/src
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.exe
+*.spec
+/build/
+dist/
