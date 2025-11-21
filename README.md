@@ -29,3 +29,5 @@ Este juego forma parte de mis pr√°cticas de desarrollo en Python, enfocado en l√
 Para instalar Pygame:
 ```bash
 pip install pygame
+
+gracias
